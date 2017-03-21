@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    User Sessions
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>User Sessions</h1>
+        <div class="container ">
+            <div class="card-columns">
+                {% for session in sessions %}
+                    <div class="card text-center">
+                        <br>
+                        <div class="card-block">
+                            <h4 class="card-title">{{ session.username }}</h4>
+                            <p class="card-text">Active: {{ session.active }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                {{ session.session_id }}</small>
+
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                {% endfor %}
+    </div>
+
+{% endblock %}
