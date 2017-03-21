@@ -9,12 +9,13 @@ class User(db.Model):
     firstname = db.Column(db.String(32))
     lastname = db.Column(db.String(32))
     picture = db.Column(db.String(64))
+    bio = db.Column(db.String())
     password = db.Column(db.String(32), unique=False)
     group = db.Column(db.Integer)
     email = db.Column(db.String(64), unique=True)
     creation_date = db.Column(db.DateTime)
 
-    def __init__(self, username, firstname, lastname, email, password, group):
+    def __init__(self, username, firstname, lastname, email, password, group, bio):
         self.username = username.lower()
         self.firstname = firstname.title()
         self.lastname = lastname.title()
@@ -23,6 +24,7 @@ class User(db.Model):
         self.group = group
         self.picture = 'static/default.jpg'
         self.creation_date = datetime.datetime.now()
+        self.bio = bio
 
     def check_password(self, password):
         return password == self.password

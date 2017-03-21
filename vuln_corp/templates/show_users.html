@@ -19,12 +19,14 @@
                                  height="200" alt="Card image cap">
                             <div class="card-block">
                                 <h4 class="card-title">{{ user.get_fullname() }}</h4>
+                                <p class="card-text">Bio: {{ user.bio | safe }}</p>
                                 <p class="card-text">Username: {{ user.username }}</p>
                                 <p class="card-text">Position: {{ user.get_group() }}</p>
                                 <p class="card-text">Email: {{ user.email }}</p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">Joined {{ user.creation_date }}</small>
+                                <small class="text-muted">
+                                    Joined {{ user.creation_date.strftime("%d %b %Y %H:%M") }}</small>
                             </div>
                         </div>
                     {% endif %}
@@ -39,20 +41,24 @@
                 {% for user in users %}
                     {% if user.group == 2 %}
                         <div class="card text-center">
+                            <br>
                             <img class="card-img-top" src="{{ user.picture }}" width="200"
                                  height="200" alt="Card image cap">
                             <div class="card-block">
                                 <h4 class="card-title">{{ user.get_fullname() }}</h4>
+                                <p class="card-text">Bio: {{ user.bio }}</p>
                                 <p class="card-text">Username: {{ user.username }}</p>
+                                <p class="card-text">Position: {{ user.get_group() }}</p>
+                                <p class="card-text">Email: {{ user.email }}</p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
+                                <small class="text-muted">
+                                    Joined {{ user.creation_date.strftime("%d %b %Y %H:%M") }}</small>
                             </div>
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
-
         </div>
     </div>
 {% endblock %}

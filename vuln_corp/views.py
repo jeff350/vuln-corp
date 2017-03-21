@@ -93,7 +93,8 @@ def signup():
             return render_template('signup.html', title='Signup', form=form, group=request.cookies.get('group'))
         else:
             newuser = User(request.form.get('username'), request.form.get('firstname'), request.form.get('lastname'),
-                           request.form.get('email'), request.form.get('password'), request.form.get('group'))
+                           request.form.get('email'), request.form.get('password'), request.form.get('group'),
+                           request.form.get('bio'))
             db.session.add(newuser)
             db.session.commit()
             flash('Signup successful for requested username="{}", email="{}"'.format(form.username.data,
@@ -168,6 +169,7 @@ def settings(*args, **kwargs):
     form.email.default = user.email
     form.password.default = user.password
     form.group.default = int(user.group)
+    form.bio.default = user.bio
     form.process()
     if request.method == 'POST':
         if not form.validate_on_submit():
@@ -180,6 +182,7 @@ def settings(*args, **kwargs):
             user.password = request.form.get('password')
             user.email = request.form.get('email')
             user.group = request.form.get('group')
+            user.bio = request.form.get('bio')
             db.session.commit()
             return redirect(url_for('profile'))
     elif request.method == 'GET':

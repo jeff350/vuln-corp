@@ -13,9 +13,7 @@
                 <p class="list-group-item-text">Username: {{ viewuser.username }}</p>
                 <p class="list-group-item-text">Position: {{ viewuser.get_group() }}</p>
                 <p class="list-group-item-text">Email: {{ viewuser.email }}</p>
-                <p class="list-group-item-text">Military ID: {{ viewuser.military_id }}</p>
-                <p class="list-group-item-text">Social Security Number: {{ viewuser.ssn }}</p>
-                <p class="list-group-item-text">Enlisted: {{ viewuser.creation_date.strftime("%d %b %Y %H:%M") }}</p>
+                <p class="list-group-item-text">Date Joined: {{ viewuser.creation_date.strftime("%d %b %Y %H:%M") }}</p>
             </div>
         </div>
     </div>

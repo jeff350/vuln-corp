@@ -37,6 +37,7 @@ class SignupForm(Form):
     group = SelectField(u'Group', coerce=int)
     password = PasswordField('Password', [validators.DataRequired("Please enter a password."), validators.length(2, 12,
                                                                                                                  "Your password must be between %(min)d and %(max)d characters.")])
+    bio = StringField('Bio', [])
     submit = SubmitField("Create account")
 
     def __init__(self, *args, **kwargs):
@@ -63,6 +64,7 @@ class EditUserForm(Form):
     group = SelectField(u'Group', coerce=int)
     password = StringField('Password', [validators.DataRequired("Please enter a password."), validators.length(2, 12,
                                                                                                                "Your password must be between %(min)d and %(max)d characters.")])
+    bio = StringField('Bio', [])
     submit = SubmitField("edit profile")
 
     def __init__(self, *args, **kwargs):

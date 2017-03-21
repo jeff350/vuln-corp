@@ -9,6 +9,10 @@
         <h1>Editing {{ user.get_fullname() }}'s User: {{ user.username }}</h1>
         <form class="form-group" action="" method="post" name="Edit user">
             {{ form.hidden_tag() }}
+            Update Bio:
+            {{ form.bio( class='form-control') }}
+            {% for error in form.bio.errors %}
+            {% endfor %}<br>
             Please set your password:
             {{ form.password( class='form-control') }}
             {% for error in form.password.errors %}
