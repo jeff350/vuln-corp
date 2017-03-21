@@ -11,3 +11,6 @@ SECRET_KEY = 'It-is-a-secret'
 COMPANY_NAME = 'Vuln Corp'
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# set to flase to enable a python shell at /console and disable debug pin
+DEBUG_MODE = True
