@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Account
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="padding-top:50px;">
+        <form class="form-signin" action="" method="post" name="login">
+            <h2 class="form-signin-heading">Create Account</h2>
+            {{ form.hidden_tag() }}
+            Please choose your username:
+            {{ form.username(class='form-control') }}
+            {% for error in form.username.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please set your password:
+            {{ form.password(class='form-control') }}
+            {% for error in form.password.errors %}
+            {% endfor %}<br>
+            Please enter your first name:
+            {{ form.firstname(class='form-control') }}
+            {% for error in form.firstname.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please enter your last name:
+            {{ form.lastname(class='form-control') }}
+            {% for error in form.lastname.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please enter your email:
+            {{ form.email(class='form-control') }}
+            {% for error in form.email.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please select your group:<br>
+            {{ form.group(class='form-control') }}
+            {% for error in form.group.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Enlist">
+        </form>
+    </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Editing {{ user.get_fullname() }}'s User: {{ user.username }}</h1>
+        <form class="form-group" action="" method="post" name="Edit user">
+            {{ form.hidden_tag() }}
+            Please set your password:
+            {{ form.password( class='form-control') }}
+            {% for error in form.password.errors %}
+            {% endfor %}<br>
+            Please enter your first name:
+            {{ form.firstname(class='form-control') }}
+            {% for error in form.firstname.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please enter your last name:
+            {{ form.lastname(class='form-control') }}
+            {% for error in form.lastname.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please enter your email:
+            {{ form.email(class='form-control') }}
+            {% for error in form.email.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            Please select your group:<br>
+            {{ form.group(class='form-control') }}
+            {% for error in form.group.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}<br>
+            <br>
+
+            <p><input class="btn btn-primary" type="submit" value="Submit"></p>
+        </form>
+    </div>
+{% endblock %}

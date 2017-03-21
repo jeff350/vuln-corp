@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Users</h1>
+        <br>
+        <h2>Admins</h2>
+        <div class="container ">
+            <div class="card-columns">
+                {% for user in users %}
+                    {% if user.group == 1 %}
+                        <div class="card text-center">
+                            <br>
+                            <img class="card-img-top" src="{{ user.picture }}" width="200"
+                                 height="200" alt="Card image cap">
+                            <div class="card-block">
+                                <h4 class="card-title">{{ user.get_fullname() }}</h4>
+                                <p class="card-text">Username: {{ user.username }}</p>
+                                <p class="card-text">Position: {{ user.get_group() }}</p>
+                                <p class="card-text">Email: {{ user.email }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Joined {{ user.creation_date }}</small>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <h2>Customers</h2>
+        <div class="container ">
+            <div class="card-columns">
+                {% for user in users %}
+                    {% if user.group == 2 %}
+                        <div class="card text-center">
+                            <img class="card-img-top" src="{{ user.picture }}" width="200"
+                                 height="200" alt="Card image cap">
+                            <div class="card-block">
+                                <h4 class="card-title">{{ user.get_fullname() }}</h4>
+                                <p class="card-text">Username: {{ user.username }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

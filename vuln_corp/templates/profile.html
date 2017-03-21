@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ user.get_fullname() }}'s User Profile
+{% endblock %}
+
+{% block content %}
+    <h1>Profile</h1>
+    <p class="text-muted">Welcome valued {{ user.get_group() }}! This is the personal profile
+        of {{ user.get_fullname() }}.
+        If you are not {{ user.get_fullname() }} or are not authorized to access this page,
+        please disconnect immediately.</p>
+
+
+    <div class="card">
+        <div class="card-block">
+            <p class="card-text">Username: {{ user.username }}</p>
+            <p class="card-text">Password: {{ user.password }}</p>
+            <p class="card-text">Group: {{ user.get_group() }}</p>
+            <p class="card-text">Email: {{ user.email }}</p>
+            <p class="card-text">Date Joined: {{ user.creation_date.strftime("%d %b %Y %H:%M") }}</p>
+            <p class="card-text">Current session: {{ session.session_id }}</p>
+        </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ config.COUNTRY_NAME }} Home
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="display-3"> {{ config.COMPANY_NAME }} </h1>
+    <p class="lead text-muted">
+    Welcome to {{ config.COMPANY_NAME }}'s website! We have been working hard since our founding to Grow our
+    comapny and our employees share this vision. When we started out we had a minimal public presence but we
+    are hoping to use this site to expand our presence.
+    <br><br>
+    <strong>We appreciate all of our customers and appreciate any feed back you may have:</strong>
+    <br><br>
+    <a class="btn btn-primary" href="/feedback/give">Provide feedback!</a>
+
+{% endblock %}

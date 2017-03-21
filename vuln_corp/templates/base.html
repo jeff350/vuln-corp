@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        {% block title %}
+            {{ config.COMPANY_NAME }}
+        {% endblock %}
+    </title>
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+    <a class="navbar-brand" href="/">{{ config.COMPANY_NAME }}</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+
+            {% if user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/settings">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<br>
+<section class="jumbotron text-xs-center">
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for category, message in messages %}
+                        {% if category == 'success' %}
+                            <div class="alert alert-success">
+                                <strong>Success!</strong> {{ message }}
+                            </div>
+                        {% elif category == 'danger' %}
+                            <div class="alert alert-danger">
+                                <strong>Danger!</strong> {{ message }}
+                            </div>
+                        {% elif category == 'info' %}
+                            <div class="alert alert-info">
+                                <strong>Info!</strong> {{ message }}
+                            </div>
+                        {% elif category == 'warning' %}
+                            <div class="alert alert-warning">
+                                <strong>Warning!</strong> {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</section>
+<hr>
+<div style="text-align: center;">
+    <footer>
+        <p>&copy; {{ config.COMPANY_NAME }} 2017</p>
+    </footer>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+</body>
+</html>
