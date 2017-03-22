@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Orders
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Issues</h1>
+        <br>
+        <div class="container form-control">
+            <h1>New Issues</h1>
+            <div class="container">
+                <div class="card-columns">
+                    {% for issue in issues_new %}
+                        <a href="/issues/{{ issue.id }}">
+
+                            <div class="card text-center">
+                                <br>
+                                <div class="card-block">
+                                    <h4 class="card-title">{{ issue.title|safe }}</h4>
+                                    <p class="card-text">Status: {{ issue.status }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">
+                                        Reported by: {{ issue.reported_by }}</small>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="container form-control">
+            <h1>Issues In progress</h1>
+            <div class="container">
+                <div class="card-columns">
+                    {% for issue in issues_in_progress %}
+                        <a href="/issues/{{ issue.id }}">
+
+                            <div class="card text-center">
+                                <br>
+                                <div class="card-block">
+                                    <h4 class="card-title">{{ issue.title|safe }}</h4>
+                                    <p class="card-text">Status: {{ issue.status }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">
+                                        Reported by: {{ issue.reported_by }}</small>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container form-control"
+        ">
+        <h1>Closed Issues</h1>
+        <div class="container">
+            <div class="card-columns">
+                {% for issue in issues_done %}
+                    <a href="/issues/{{ issue.id }}">
+
+                        <div class="card text-center">
+                            <br>
+                            <div class="card-block">
+                                <h4 class="card-title">{{ issue.title|safe }}</h4>
+                                <p class="card-text">Status: {{ issue.status }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">
+                                    Reported by: {{ issue.reported_by }}</small>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

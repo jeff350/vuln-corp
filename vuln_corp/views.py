@@ -2,11 +2,14 @@ from functools import wraps
 from random import *
 
 from flask import render_template, flash, redirect, request, url_for, make_response
+from sqlalchemy import desc
 from sqlalchemy.exc import *
 
 from vuln_corp import app
-from .forms import LoginForm, SignupForm, EditUserForm
-from .models import db, User, Session, Groups
+from vuln_corp import utils
+from vuln_corp.choices import ISSUE_ASSIGNEES
+from vuln_corp.forms import LoginForm, SignupForm, EditUserForm, EditIssueForm, IssueForm
+from vuln_corp.models import db, User, Session, Groups, Issues
 
 
 def get_user(f):
@@ -143,7 +146,7 @@ def sessions(*args, **kwargs):
 def about(*args, **kwargs):
     user = kwargs.get('user')
     session = kwargs.get('session')
-    return render_template('about.html', group=request.cookies.get('group'))
+    return render_template('about.html', user=user, group=request.cookies.get('group'))
 
 
 @app.route('/users/<username>')
@@ -193,3 +196,72 @@ def settings(*args, **kwargs):
 @app.route('/unauthorized')
 def unauthorized():
     return render_template('/unauthorized.html', group=request.cookies.get('group'))
+
+
+@app.route('/issues')
+@get_user
+def issues(*args, **kwargs):
+    user = kwargs.get('user')
+    session = kwargs.get('session')
+    issues_new = Issues.query.filter(Issues.status == 'New').order_by(desc(Issues.issued_date)).all()
+    issues_in_progress = Issues.query.filter(Issues.status == 'In Progress').order_by(desc(Issues.issued_date)).all()
+    issues_done = Issues.query.filter(Issues.status == 'Closed').order_by(desc(Issues.issued_date)).all()
+    return render_template('issues.html', user=user, session=session, issues_new=issues_new,
+                           issues_in_progress=issues_in_progress, issues_done=issues_done,
+                           group=request.cookies.get('group'))
+
+
+@app.route('/issues/<id>', methods=['GET', 'POST'])
+@get_user
+def issue(id, *args, **kwargs):
+    user = kwargs.get('user')
+    session = kwargs.get('session')
+    sql = "select * from Issues WHERE id ==" + id
+    for command in sql.split(';'):
+        result = db.engine.execute(command)
+        for row in result:
+            sql_issue = row
+    issue = utils.get_issue_from_id(sql_issue.id)
+    form = EditIssueForm()
+    # initialize form with current data
+    print(issue.summary)
+    form.summary.default = issue.summary
+    form.title.default = issue.title
+    form.assignee.default = issue.assignee
+    form.status.default = issue.status
+    form.assignee.choices = ISSUE_ASSIGNEES
+    form.process()
+
+    if request.method == 'POST':
+        if not form.validate_on_submit():
+            flash('The issue was unable to be updated', 'danger')
+            return render_template('issue.html', issue=issue, form=form, user=user, group=request.cookies.get('group'))
+        else:
+            issue.title = request.form.get('title')
+            issue.summary = request.form.get('summary')
+            issue.assignee = request.form.get('assignee')
+            issue.status = request.form.get('status')
+            db.session.commit()
+            return redirect('issues/' + str(issue.id))
+    elif request.method == 'GET':
+        return render_template('issue.html', issue=issue, form=form, user=user, group=request.cookies.get('group'))
+
+
+@app.route('/issues/create', methods=['GET', 'POST'])
+@get_user
+def create_issue(*args, **kwargs):
+    user = kwargs.get('user')
+    session = kwargs.get('session')
+    form = IssueForm()
+    username = user.username
+    if request.method == 'POST':
+        if not form.validate_on_submit():
+            return render_template('newissue.html', form=form, group=request.cookies.get('group'))
+        elif form.validate_on_submit():
+            newissue = Issues(form.summary.data, form.title.data, user.username)
+            db.session.add(newissue)
+            db.session.commit()
+            return redirect(url_for('issues'))
+    elif request.method == 'GET':
+        return render_template('newissue.html', form=form, user=user, group=request.cookies.get('group'))
+    return render_template('newissue.html', group=request.cookies.get('group'))

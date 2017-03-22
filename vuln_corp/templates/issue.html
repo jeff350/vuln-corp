@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h1> Issue Details</h1>
+        <div class="card">
+            <div class="card-header">
+                Issue {{ issue.id }}  </div>
+            <div class="card-block">
+                <h1 class="card-title text-center">{{ issue.title.upper()| safe }}</h1>
+                <div class="row text-center">
+                    <div class="col">
+                        Status: {{ issue.status }}
+                    </div>
+                    <div class="col">
+                        Assignee: {{ issue.assignee }}
+                    </div>
+                </div>
+                <br><br>
+                <p>{{ issue.reported_by }} reported this issue
+                    on {{ issue.issued_date }}</p>
+                <p class="card-text">Summary: {{ issue.summary|safe }}</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br>
+        <h1>Edit Issue</h1>
+        <form class="form-control" action="" method="post">
+            {{ form.hidden_tag() }}
+            <p> Create a short title for your Issue</p>
+            {{ form.title(class="form-control") }}
+            {% for error in form.title.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}
+            <br>
+            <label>
+                Provide us with any details you can about the issue including any details we would need to
+                reproduce it
+            </label>
+            <label>
+                Enter Issue:
+            </label>
+            {{ form.summary(class="form-control") }}
+            {% for error in form.summary.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}
+            <br>
+            <label>
+                Enter Issue:
+            </label>
+            {{ form.assignee(class="form-control") }}
+            {% for error in form.assignee.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}
+            <br>
+            <label>
+                Enter Issue:
+            </label>
+            {{ form.status(class="form-control") }}
+            {% for error in form.status.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}
+            <br>
+            <p><input class="btn btn-primary" type="submit" value="Submit"></p>
+        </form>
+    </div>
+
+
+{% endblock %}

@@ -78,3 +78,29 @@ class Groups(db.Model):
 
     def __repr__(self):
         return '<group:{}>'.format(self.groupname)
+
+
+class Issues(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    summary = db.Column(db.String(1000))
+    status = db.Column(db.String(60))
+    reported_by = db.Column(db.String(32))
+    assignee = db.Column(db.String(32))
+    completed = db.Column(db.Boolean)
+    completed_date = db.Column(db.DateTime)
+    issued_date = db.Column(db.DateTime)
+
+    def __init__(self, summary, title, reported_by):
+        self.summary = summary
+        self.title = title
+        self.status = 'New'
+        self.reported_by = reported_by
+        self.assignee = 'unassigned'
+        self.completed = False
+        self.issued_date = datetime.datetime.now()
+        self.completed_date = None
+
+    def mark_completed(self):
+        self.completed = True
+        self.completed_date = datetime.datetime.now()

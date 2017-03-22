@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create New Issue
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Report Issue</h1>
+        <form class="form-control" action="" method="post">
+            {{ form.hidden_tag() }}
+            <p> Create a short title for your Issue</p>
+            {{ form.title(class="form-control") }}
+            {% for error in form.title.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}
+            <br>
+            <label>
+                Provied us with any details you can about the issue including any details we would need to reproduce it
+            </label>
+            <label>
+                Enter orders:
+            </label>
+            {{ form.summary(class="form-control") }}
+            {% for error in form.summary.errors %}
+                <span class="label label-danger">{{ error }}</span>
+            {% endfor %}
+            <br>
+            <p><input class="btn btn-primary" type="submit" value="Submit"></p>
+        </form>
+    </div>
+{% endblock %}

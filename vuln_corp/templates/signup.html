@@ -37,14 +37,12 @@
             {{ form.bio( class='form-control') }}
             {% for error in form.bio.errors %}
             {% endfor %}<br>
-            Please select your group:<br>
             {{ form.group(class='form-control') }}
             {% for error in form.group.errors %}
                 <span class="label label-danger">{{ error }}</span>
             {% endfor %}<br>
             <br>
-            <input class="btn btn-primary" type="submit" value="Enlist">
+            <input class="btn btn-primary" type="submit" value="Create Account">
         </form>
     </div>
-    </form>
 {% endblock %}

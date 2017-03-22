@@ -1,7 +1,9 @@
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SubmitField, validators, PasswordField
+from wtforms import StringField, SelectField, SubmitField, validators, PasswordField, HiddenField
 from wtforms.fields.html5 import EmailField
+from wtforms.widgets import TextArea
 
+from vuln_corp.choices import ISSUE_STATUS, ISSUE_ASSIGNEES
 from .models import User
 
 
@@ -34,7 +36,7 @@ class SignupForm(Form):
     lastname = StringField("Last name", [validators.DataRequired("Please enter your last name.")])
     email = EmailField("Email", [validators.DataRequired("Please enter your email address."),
                                  validators.Email("Please enter your email address.")])
-    group = SelectField(u'Group', coerce=int)
+    group = HiddenField(u'Group', default='2')
     password = PasswordField('Password', [validators.DataRequired("Please enter a password."), validators.length(2, 12,
                                                                                                                  "Your password must be between %(min)d and %(max)d characters.")])
     bio = StringField('Bio', [])
@@ -70,7 +72,20 @@ class EditUserForm(Form):
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
 
-    def validate(self):
-        if not Form.validate(self):
-            return False
-        return True
+
+class IssueForm(Form):
+    title = StringField("Title", [validators.DataRequired("Enter a title for the issue")])
+    summary = StringField("Issue", [validators.DataRequired("Enter Your issue here")], widget=TextArea())
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+
+
+class EditIssueForm(Form):
+    title = StringField("Title", [validators.DataRequired("Enter a title for the issue")])
+    summary = StringField("Issue", [validators.DataRequired("Enter Your issue here")], widget=TextArea())
+    status = SelectField('type', choices=ISSUE_STATUS)
+    assignee = SelectField(u'User', choices=ISSUE_ASSIGNEES)
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
