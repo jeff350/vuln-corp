@@ -193,9 +193,9 @@ def settings(*args, **kwargs):
                                group=request.cookies.get('group'))
 
 
-@app.route('/unauthorized')
-def unauthorized():
-    return render_template('/unauthorized.html', group=request.cookies.get('group'))
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 @app.route('/issues')
